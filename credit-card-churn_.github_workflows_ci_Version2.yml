@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master, polish/portfolio ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r credit-card-churn/requirements.txt
+      - name: Generate synthetic data & run training
+        run: |
+          python credit-card-churn/data/synthetic_data.py --out credit-card-churn/data/ci_sample.csv --n 500
+          python credit-card-churn/src/train.py --data credit-card-churn/data/ci_sample.csv --out credit-card-churn/models/ci.joblib
