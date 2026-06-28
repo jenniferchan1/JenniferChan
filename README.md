@@ -54,7 +54,5 @@ Now, I combine my rigorous Big 4 finance foundation with end-to-end data science
 I am currently open to connecting for collaborative open-source opportunities at the intersection of Finance and Tech, as well as early inquiries regarding my upcoming training and consulting launch.
 
 * 💼 **LinkedIn:** [Jennifer Chan, ACCA](YOUR_LINKEDIN_URL_HERE)  
-* 📧 **Email:** [your.email@example.com](mailto:your.email@example.com)  
-* 🌐 **Website:** *Coming Soon / Your Business URL*
 
 "The future of finance isn't just about managing numbers; it's about engineering the systems that automate them and teaching teams how to lead them."
