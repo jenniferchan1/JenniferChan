@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jennifer Chan, ACCA — AI Engineer & Solutions Architect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg:        #0a0a0f;
+      --bg-card:   #0f0f1a;
+      --bg-raised: #141428;
+      --neon:      #00d4ff;
+      --neon-dim:  #00d4ff33;
+      --neon-glow: #00d4ff66;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --border:    #1e2a3a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--neon-glow); border-radius: 2px; }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .neon { color: var(--neon); }
+    .neon-border { border-color: var(--neon); }
+    .neon-bg { background: var(--neon-dim); }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(10, 10, 15, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--neon);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links a:hover { color: var(--neon); }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--muted);
+      transition: all 0.3s;
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--neon);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 100px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--neon);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--neon);
+    }
+
+    .hero-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-name .accent { color: var(--neon); }
+
+    .hero-tagline-wrap {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--muted);
+      margin-top: 1.25rem;
+      height: 2em;
+      display: flex;
+      align-items: center;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--neon);
+      margin-left: 3px;
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero-bio {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin-top: 1.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.75rem;
+      border: 1px solid var(--neon);
+      color: var(--bg);
+      background: var(--neon);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--neon);
+      box-shadow: 0 0 20px var(--neon-glow);
+    }
+
+    .btn-ghost {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.75rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--neon);
+      color: var(--neon);
+    }
+
+    .hero-scroll {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: var(--neon);
+      animation: slide-line 2s ease-in-out infinite;
+    }
+
+    @keyframes slide-line { 0% { left: -100%; } 100% { left: 100%; } }
+
+    .hero-stats {
+      margin-top: 3rem;
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--neon); }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text p strong { color: var(--text); font-weight: 600; }
+
+    .skills-grid { display: grid; gap: 1rem; }
+
+    .skill-category {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .skill-category:hover { border-color: var(--neon-glow); }
+
+    .skill-category-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--neon);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .skill-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--bg-raised);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Education cards ── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .edu-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .edu-card:hover { border-color: var(--neon-glow); }
+
+    .edu-degree {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      line-height: 1.4;
+    }
+
+    .edu-institution { font-size: 0.8rem; color: var(--neon); margin-bottom: 0.2rem; }
+    .edu-dates { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; }
+
+    /* ── Projects — 3-col grid, no featured span ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: var(--neon-glow);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 212, 255, 0.08);
+    }
+
+    .project-card:hover::before { opacity: 1; }
+
+    .project-emoji {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .project-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--neon);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      line-height: 1.35;
+    }
+
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .project-depth {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-depth strong {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--neon);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      padding: 0.2rem 0.55rem;
+      background: var(--neon-dim);
+      color: var(--neon);
+      border: 1px solid var(--neon-glow);
+      letter-spacing: 0.04em;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: auto;
+    }
+
+    .project-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .project-link:hover { color: var(--neon); }
+    .project-link svg { width: 14px; height: 14px; }
+
+    /* ── Timeline ── */
+    .timeline { margin-top: 3rem; position: relative; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--neon), var(--border), transparent);
+    }
+
+    .timeline-item {
+      padding-left: 2.5rem;
+      padding-bottom: 3rem;
+      position: relative;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -5px;
+      top: 6px;
+      width: 11px;
+      height: 11px;
+      border: 1px solid var(--neon);
+      background: var(--bg);
+      border-radius: 50%;
+    }
+
+    .timeline-dot::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: var(--neon);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .timeline-item:hover .timeline-dot::after { opacity: 1; }
+
+    .timeline-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--neon);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-company { font-size: 0.875rem; color: var(--muted); margin-bottom: 0.75rem; }
+
+    .timeline-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 640px;
+    }
+
+    .timeline-desc li {
+      margin-bottom: 0.4rem;
+      list-style: none;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .timeline-desc li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--neon);
+    }
+
+    /* ── Contact ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+
+    .contact-info-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--neon);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .contact-info-value {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .contact-social { display: flex; gap: 1rem; margin-top: 2rem; }
+
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .social-btn:hover {
+      border-color: var(--neon);
+      color: var(--neon);
+      box-shadow: 0 0 12px var(--neon-glow);
+    }
+
+    .social-btn svg { width: 16px; height: 16px; }
+
+    .form-group { margin-bottom: 1.25rem; }
+
+    .form-label {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--neon);
+      box-shadow: 0 0 0 2px var(--neon-dim);
+    }
+
+    .form-input::placeholder { color: #374151; }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.6;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-submit {
+      width: 100%;
+      padding: 0.875rem;
+      background: var(--neon);
+      border: none;
+      color: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .form-submit:hover {
+      background: transparent;
+      color: var(--neon);
+      border: 1px solid var(--neon);
+      box-shadow: 0 0 20px var(--neon-glow);
+    }
+
+    .form-submit:active { transform: scale(0.99); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.06;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0; right: 0;
+      background: rgba(10, 10, 15, 0.98);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem;
+      z-index: 99;
+      backdrop-filter: blur(12px);
+    }
+
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--neon); }
+
+    @media (max-width: 900px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 2rem; }
+      .footer-inner { flex-direction: column; align-items: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+      .fade-in { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body class="grid-bg">
+
+  <div class="glow-blob" style="width:600px;height:600px;background:#00d4ff;top:-200px;right:-100px;"></div>
+  <div class="glow-blob" style="width:400px;height:400px;background:#0060ff;bottom:20%;left:-100px;"></div>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-logo">jennifer.chan<span style="color:var(--muted)">$</span></span>
+      <ul class="nav-links">
+        <li><a href="#about">// about</a></li>
+        <li><a href="#projects">// projects</a></li>
+        <li><a href="#experience">// experience</a></li>
+        <li><a href="#contact">// contact</a></li>
+      </ul>
+      <div class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about" onclick="closeMobileMenu()">// about</a>
+    <a href="#projects" onclick="closeMobileMenu()">// projects</a>
+    <a href="#experience" onclick="closeMobileMenu()">// experience</a>
+    <a href="#contact" onclick="closeMobileMenu()">// contact</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-eyebrow">ACCA &nbsp;·&nbsp; AI ENGINEER &nbsp;/&nbsp; SOLUTIONS ARCHITECT</div>
+    <h1 class="hero-name">Jennifer<br><span class="accent">Chan</span></h1>
+    <div class="hero-tagline-wrap mono">
+      <span id="typewriter"></span><span class="cursor"></span>
+    </div>
+    <p class="hero-bio">
+      Chartered Certified Accountant turned AI engineer — after nine years inside Deloitte audit rooms, Savills finance teams, and Foodco operations, I watched enterprise value vanish into manual spreadsheets and fragmented data silos. Now I build the intelligent systems that eliminate them.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">9<span>+</span></div>
+        <div class="stat-label">Years in Finance</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Big<span>4</span></div>
+        <div class="stat-label">Deloitte Trained</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">AI<span>*</span></div>
+        <div class="stat-label">Consulting Launch Q3 2025</div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      scroll to explore
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <div class="fade-in">
+      <p class="section-label">01 &nbsp;·&nbsp; BACKGROUND</p>
+      <h2 class="section-title">From the Balance Sheet<br>to the Model Sheet</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>I am a <strong>Chartered Certified Accountant (ACCA)</strong> making a deliberate, technically-grounded transition into AI Engineering and Solutions Architecture. After nine years analysing financial health, operational risk, and complex reporting across <strong>Deloitte (Hong Kong), Savills, and Foodco UK</strong>, I saw firsthand how much enterprise value is locked inside manual spreadsheets and unstructured data silos.</p>
+        <p>I sharpened my technical foundations through <strong>Stanford's Code in Place</strong> and have since combined my rigorous Big 4 finance background with end-to-end data science and applied AI — building intelligent, automated workflows that drive <strong>real, bottom-line ROI</strong>.</p>
+        <p>In three months, I am preparing to launch my <strong>AI Consulting &amp; Education Business</strong> with a dual mission: help SMEs automate legacy accounting processes, and upskill finance teams to leverage machine learning safely and effectively.</p>
+
+        <p class="section-label" style="margin-top:2rem;">EDUCATION</p>
+        <div class="edu-grid">
+          <div class="edu-card">
+            <div class="edu-degree">MSc Computer Science<br>with Artificial Intelligence</div>
+            <div class="edu-institution">University of York</div>
+            <div class="edu-dates">Jun 2025 — Oct 2027</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-degree">Postgraduate Certificate<br>AI/ML Business Applications</div>
+            <div class="edu-institution">University of Texas at Austin</div>
+            <div class="edu-dates">Jul 2024 — Mar 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-grid fade-in">
+        <div class="skill-category">
+          <div class="skill-category-label">AI &amp; ML</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Scikit-learn</span>
+            <span class="skill-tag">XGBoost</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">Hugging Face</span>
+            <span class="skill-tag">LangChain</span>
+            <span class="skill-tag">RAG Pipelines</span>
+            <span class="skill-tag">Prompt Engineering</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-label">Data &amp; Automation</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Pandas</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">Power BI</span>
+            <span class="skill-tag">Excel / VBA</span>
+            <span class="skill-tag">Matplotlib</span>
+            <span class="skill-tag">Seaborn</span>
+            <span class="skill-tag">ETL Pipelines</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-label">Finance Domain</div>
+          <div class="skill-tags">
+            <span class="skill-tag">ACCA Qualified</span>
+            <span class="skill-tag">Management Accounts</span>
+            <span class="skill-tag">Audit &amp; Assurance</span>
+            <span class="skill-tag">IFRS</span>
+            <span class="skill-tag">Risk Assessment</span>
+            <span class="skill-tag">Budgeting &amp; Forecasting</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-category-label">Engineering &amp; Tools</div>
+          <div class="skill-tags">
+            <span class="skill-tag">OpenAI API</span>
+            <span class="skill-tag">FastAPI</span>
+            <span class="skill-tag">Streamlit</span>
+            <span class="skill-tag">Git / GitHub</span>
+            <span class="skill-tag">HTML5 / CSS3</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">OOP / CSV I/O</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <div class="fade-in">
+      <p class="section-label">02 &nbsp;·&nbsp; SELECTED WORK</p>
+      <h2 class="section-title">Featured Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <!-- Project 1 -->
+      <div class="project-card fade-in" onclick="openProject('churn')">
+        <span class="project-emoji">&#x1F4B3;</span>
+        <div class="project-number">PROJECT_001</div>
+        <h3 class="project-title">Credit Card Customer Churn Predictor &amp; Revenue Protection Pipeline</h3>
+        <p class="project-desc">An end-to-end machine learning pipeline engineered to identify high-risk credit card holders before they cancel services — enabling financial institutions to run targeted, high-ROI retention campaigns rather than wasting budget on blanket outreach.</p>
+        <div class="project-depth">
+          <strong>Engineering Depth</strong>
+          Comprehensive Exploratory Data Analysis (EDA), missing value handling, and feature transformations. Built a tuned predictive model evaluated against Precision, Recall, and ROC-AUC to optimise cost-benefit trade-offs for maximum retention ROI.
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Scikit-Learn</span>
+          <span class="project-tag">XGBoost</span>
+          <span class="project-tag">Pandas</span>
+          <span class="project-tag">Matplotlib</span>
+          <span class="project-tag">Seaborn</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+          <a href="#" class="project-link" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Notebook
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card fade-in" onclick="openProject('nlp')">
+        <span class="project-emoji">&#x1F50D;</span>
+        <div class="project-number">PROJECT_002</div>
+        <h3 class="project-title">NLP Semantic Analysis Pipeline</h3>
+        <p class="project-desc">An AI application designed to read, clean, and extract underlying semantic intent, patterns, and categories from unstructured business text and communication logs — turning qualitative data into structured, actionable insight.</p>
+        <div class="project-depth">
+          <strong>Engineering Depth</strong>
+          Implemented text preprocessing steps including special character handling and stop-word adjustments. Leveraged pre-trained transformer architectures via Hugging Face to extract actionable business patterns from qualitative text datasets using tokenization pipelines and Regex cleaning.
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Hugging Face</span>
+          <span class="project-tag">Transformers</span>
+          <span class="project-tag">Tokenization</span>
+          <span class="project-tag">Regex</span>
+          <span class="project-tag">NLP</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+          <a href="#" class="project-link" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Write-up
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card fade-in" onclick="openProject('pawsome')">
+        <span class="project-emoji">&#x1F43E;</span>
+        <div class="project-number">PROJECT_003 &nbsp;·&nbsp; STANFORD CODE IN PLACE</div>
+        <h3 class="project-title">Pawsome Care &amp; Tracking App</h3>
+        <p class="project-desc">A daily routine tracking and scheduling software ecosystem built to move manual pet management into an organised digital application — selected as a Stanford Code in Place final project. Developed as a Python CLI backend and mapped into a fully interactive frontend.</p>
+        <div class="project-depth">
+          <strong>Engineering Depth</strong>
+          Implemented robust local data persistence via custom CSV reading/writing routines. Mapped structured relational data objects (routines, logs, reminders) using Object-Oriented Architecture, then engineered responsive UI views in HTML5/CSS3/JavaScript for tracking real-time daily metrics.
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">OOP</span>
+          <span class="project-tag">CSV File I/O</span>
+          <span class="project-tag">HTML5</span>
+          <span class="project-tag">CSS3</span>
+          <span class="project-tag">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+          <a href="#" class="project-link" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Live Demo
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience">
+    <div class="fade-in">
+      <p class="section-label">03 &nbsp;·&nbsp; CAREER</p>
+      <h2 class="section-title">Experience</h2>
+    </div>
+    <div class="timeline fade-in">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">MAR 2026 — PRESENT &nbsp;·&nbsp; 4 MOS</div>
+        <div class="timeline-role">Finance Manager</div>
+        <div class="timeline-company">Foodco UK &nbsp;·&nbsp; Full-time &nbsp;·&nbsp; United Kingdom</div>
+        <ul class="timeline-desc">
+          <li><strong style="color:var(--text)">Data-Driven Decision Making:</strong> Lead end-to-end management reporting — delivering monthly P&amp;L, variance analysis, and KPI dashboards that translate raw financial data into board-level strategic insight; a direct analogue to ML model evaluation and performance monitoring.</li>
+          <li><strong style="color:var(--text)">Process Automation Mindset:</strong> Identified and documented 20+ hours/month of repetitive month-end workflows — the catalyst for building AI automation prototypes now forming the foundation of my consulting practice.</li>
+          <li><strong style="color:var(--text)">Systems Thinking:</strong> Manage cash flow forecasting, budgeting, and financial controls across multiple trading entities — developing the cross-domain, multi-variable thinking core to designing robust AI solutions.</li>
+          <li><strong style="color:var(--text)">Stakeholder Communication:</strong> Translate complex financial models into clear, actionable narratives for senior leadership — the same skill required to present AI outputs to non-technical business audiences.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">DEC 2024 — MAR 2026 &nbsp;·&nbsp; 1 YR 4 MOS</div>
+        <div class="timeline-role">Management Accountant</div>
+        <div class="timeline-company">Foodco UK &nbsp;·&nbsp; Full-time &nbsp;·&nbsp; United Kingdom</div>
+        <ul class="timeline-desc">
+          <li><strong style="color:var(--text)">Structured Data Mastery:</strong> Prepared full management accounts — balance sheet reconciliations, accruals, prepayments, and intercompany transactions — building the disciplined data hygiene habits critical for clean ML training pipelines.</li>
+          <li><strong style="color:var(--text)">Automation &amp; Efficiency:</strong> Rebuilt the monthly reporting template in Excel, reducing preparation time by ~30% through formula consolidation — a direct precursor to the Python automation work I now apply in AI projects.</li>
+          <li><strong style="color:var(--text)">Audit Liaison &amp; Evidence Standards:</strong> Supported year-end statutory audits, providing structured supporting schedules — developing the rigorous documentation and evidence standards that underpin trustworthy AI outputs.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">NOV 2021 — DEC 2024 &nbsp;·&nbsp; 3 YRS 2 MOS</div>
+        <div class="timeline-role">Central Finance Team</div>
+        <div class="timeline-company">Savills &nbsp;·&nbsp; Full-time &nbsp;·&nbsp; United Kingdom</div>
+        <ul class="timeline-desc">
+          <li><strong style="color:var(--text)">Financial Analysis &amp; BI:</strong> Gathered and analysed financial data across the real estate portfolio to extract operational insights — developing the analytical instinct for spotting patterns in complex datasets, directly transferable to feature engineering in ML.</li>
+          <li><strong style="color:var(--text)">Forecasting &amp; Predictive Thinking:</strong> Contributed to budgeting and forecasting processes, building comfort with uncertainty quantification and scenario modelling — the conceptual foundation for probabilistic AI systems.</li>
+          <li><strong style="color:var(--text)">Cross-Functional Leadership:</strong> Partnered with business unit heads across divisions to achieve financial goals — building the stakeholder management and communication skills needed to deploy AI solutions within complex organisations.</li>
+          <li><strong style="color:var(--text)">Process Improvement &amp; Agility:</strong> Mapped inefficiencies in the purchase-to-pay cycle and documented system upgrade requirements — a direct application of the problem decomposition approach used in AI workflow design.</li>
+          <li><strong style="color:var(--text)">Performance Evaluation:</strong> Evaluated company performance against key financial metrics, advising on improvements — the same evidence-based, iterative mindset applied when evaluating and tuning machine learning models.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">SEP 2018 — JUL 2021 &nbsp;·&nbsp; 2 YRS 11 MOS</div>
+        <div class="timeline-role">Audit Senior</div>
+        <div class="timeline-company">Deloitte Touche Tohmatsu &nbsp;·&nbsp; Full-time &nbsp;·&nbsp; Hong Kong SAR</div>
+        <ul class="timeline-desc">
+          <li><strong style="color:var(--text)">Risk Assessment &amp; Analytical Rigour:</strong> Identified, analysed, and evaluated potential risks in financial data — allocating audit resources efficiently and implementing risk mitigation strategies. This evidence-driven, risk-weighted approach directly informs how I evaluate model reliability and bias in AI systems.</li>
+          <li><strong style="color:var(--text)">Data Analytics:</strong> Leveraged analytics tooling to enhance data understanding and drive data-driven decision-making — an early foundation that accelerated my transition into Python-based machine learning and statistical modelling.</li>
+          <li><strong style="color:var(--text)">Financial Reporting &amp; IFRS:</strong> Ensured accurate and compliant financial reporting across client engagements, applying IFRS knowledge — building the structured, rule-based thinking that underpins designing trustworthy, compliant AI outputs for regulated industries.</li>
+          <li><strong style="color:var(--text)">People &amp; Project Leadership:</strong> Led audit fieldwork, managed junior team members, and cultivated strong cross-functional client relationships — the same leadership and communication skills now applied to consulting and AI education delivery.</li>
+          <li><strong style="color:var(--text)">IT Proficiency &amp; Project Management:</strong> Skilled across a variety of software tools; assessed design and effectiveness of IT controls — building the systems-level thinking that bridges finance operations and AI infrastructure.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="fade-in">
+      <p class="section-label">04 &nbsp;·&nbsp; LET'S TALK</p>
+      <h2 class="section-title">Get in Touch</h2>
+    </div>
+    <div class="contact-layout">
+      <div class="fade-in">
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.9;margin-bottom:2rem;">
+          Open to conversations about AI engineering roles, solutions architecture, and SME consulting — especially where finance domain knowledge creates real competitive edge. Also happy to connect with anyone interested in AI education for finance teams.
+        </p>
+        <div>
+          <div class="contact-info-label">LINKEDIN</div>
+          <div class="contact-info-value">
+            <a href="https://www.linkedin.com/in/jennifer-chany/" target="_blank" rel="noopener noreferrer" style="color:var(--text);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--neon)'" onmouseout="this.style.color='var(--text)'">jennifer-chany</a>
+          </div>
+        </div>
+        <div>
+          <div class="contact-info-label">BASED IN</div>
+          <div class="contact-info-value">United Kingdom</div>
+        </div>
+        <div>
+          <div class="contact-info-label">AVAILABILITY</div>
+          <div class="contact-info-value" style="color:var(--neon)">● Open to opportunities</div>
+        </div>
+        <div>
+          <div class="contact-info-label">LAUNCHING</div>
+          <div class="contact-info-value" style="color:var(--neon)">&#x25C8; AI Consulting Practice &nbsp;·&nbsp; Q3 2025</div>
+        </div>
+        <div class="contact-social">
+          <a href="https://www.linkedin.com/in/jennifer-chany/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Twitter/X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="fade-in">
+        <form id="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="name">NAME</label>
+              <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">EMAIL</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="you@company.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="subject">SUBJECT</label>
+            <input class="form-input" type="text" id="subject" name="subject" placeholder="Consulting / Role / Collaboration / Just saying hi" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message">MESSAGE</label>
+            <textarea class="form-input" id="message" name="message" placeholder="Tell me about the opportunity or project..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="submit-btn">SEND MESSAGE &#x2192;</button>
+          <p id="form-success" style="display:none;font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--neon);margin-top:1rem;letter-spacing:0.05em;">
+            &#x2713; Message sent. I'll get back to you shortly.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy">Jennifer Chan, ACCA &nbsp;·&nbsp; AI Engineer &amp; Solutions Architect</span>
+      <span class="footer-copy" style="color:var(--neon)">United Kingdom &nbsp;·&nbsp; 2025</span>
+      <span class="footer-copy">Built with precision. No spreadsheets were harmed.</span>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ── -->
+  <script>
+    // ── Typewriter effect ──
+    const phrases = [
+      'ACCA → AI Engineer.',
+      'Turning Spreadsheets into Systems.',
+      'Big 4 Rigour. Machine Learning Precision.',
+      'Automating Finance with AI.',
+      'Building the Future of Accounting.',
+    ];
+
+    let phraseIdx = 0, charIdx = 0, deleting = false;
+    const el = document.getElementById('typewriter');
+
+    function type() {
+      const phrase = phrases[phraseIdx];
+      if (!deleting) {
+        charIdx++;
+        el.textContent = phrase.slice(0, charIdx);
+        if (charIdx === phrase.length) {
+          deleting = true;
+          setTimeout(type, 2200);
+          return;
+        }
+        setTimeout(type, 55);
+      } else {
+        charIdx--;
+        el.textContent = phrase.slice(0, charIdx);
+        if (charIdx === 0) {
+          deleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          setTimeout(type, 350);
+          return;
+        }
+        setTimeout(type, 28);
+      }
+    }
+
+    setTimeout(type, 800);
+
+    // ── Scroll animations ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach((el, i) => {
+      el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+      observer.observe(el);
+    });
+
+    // ── Mobile nav ──
+    const toggle = document.getElementById('nav-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    toggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+    }
+
+    // ── Nav active state ──
+    window.addEventListener('scroll', () => {
+      const sections = ['about', 'projects', 'experience', 'contact'];
+      const scrollY = window.scrollY + 100;
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+        if (!el || !link) return;
+        if (scrollY >= el.offsetTop && scrollY < el.offsetTop + el.offsetHeight) {
+          link.style.color = 'var(--neon)';
+        } else {
+          link.style.color = 'var(--muted)';
+        }
+      });
+    });
+
+    // ── Contact form ──
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.textContent = 'SENDING...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+        document.getElementById('contact-form').reset();
+      }, 1200);
+    }
+
+    // ── Project card click ──
+    function openProject(id) {
+      console.log('Opening project:', id);
+    }
+
+    // ── Smooth close mobile menu on scroll ──
+    window.addEventListener('scroll', () => {
+      if (mobileMenu.classList.contains('open')) {
+        closeMobileMenu();
+      }
+    });
+  </script>
+</body>
+</html>
